@@ -12,7 +12,6 @@ export async function crearPedidoModel({
     INSERT INTO pedidos (
       cliente_nombre,
       tipo_pedido,
-      ubicacion,
       productos,
       total,
       yape_operacion,
@@ -20,7 +19,7 @@ export async function crearPedidoModel({
       pago_confirmado_en,
       estado
     )
-    VALUES (?, ?, NULL, ?, ?, ?, FALSE, NULL, ?)
+    VALUES (?, ?, ?, ?, ?, FALSE, NULL, ?)
     `,
     [
       cliente_nombre,
@@ -42,7 +41,6 @@ export async function obtenerPedidosModel() {
   id,
   cliente_nombre,
   tipo_pedido,
-  ubicacion,
   productos,
   total,
   yape_operacion,
@@ -67,7 +65,6 @@ export async function obtenerPedidoPorIdModel(id) {
   id,
   cliente_nombre,
   tipo_pedido,
-  ubicacion,
   productos,
   total,
   yape_operacion,
@@ -117,19 +114,6 @@ export async function confirmarPagoPedidoModel(id) {
   );
 
   return rows[0] || null;
-}
-
-export async function asignarUbicacionPedidoModel(id, ubicacion) {
-  const [result] = await db.query(
-    `
-    UPDATE pedidos
-    SET ubicacion = ?
-    WHERE id = ?
-    `,
-    [ubicacion, id]
-  );
-
-  return result.affectedRows;
 }
 
 

@@ -1,6 +1,5 @@
 import {
   actualizarPedidosListosModel,
-  asignarUbicacionPedidoModel,
   confirmarPagoPedidoModel,
   crearPedidoModel,
   marcarPedidoEntregadoModel,
@@ -26,13 +25,13 @@ export async function crearPedido(req, res) {
 
     if (!tipo_pedido) {
       return res.status(400).json({
-        message: "Debe indicar si el pedido es para llevar o para consumir en el restaurante",
+        message: "Debe indicar si el pedido es para entregar en estacion del tren o delivery",
       });
     }
 
     if (
-      tipo_pedido !== "restaurante" &&
-      tipo_pedido !== "llevar"
+      tipo_pedido !== "estacion" &&
+      tipo_pedido !== "delivery"
     ) {
       return res.status(400).json({
         message: "Tipo de pedido no válido",
@@ -146,43 +145,6 @@ export async function confirmarPagoPedido(req, res) {
 
     return res.status(500).json({
       message: "Error interno al confirmar el pago",
-    });
-  }
-}
-export async function asignarUbicacionPedido(req, res) {
-  try {
-    const { id } = req.params;
-    const { ubicacion } = req.body;
-
-    if (!ubicacion || ubicacion.trim() === "") {
-      return res.status(400).json({
-        message: "La ubicación o mesa es obligatoria",
-      });
-    }
-
-    const ubicacionLimpia = ubicacion.trim();
-
-    const affectedRows = await asignarUbicacionPedidoModel(
-      id,
-      ubicacionLimpia
-    );
-
-    if (affectedRows === 0) {
-      return res.status(404).json({
-        message: "Pedido no encontrado",
-      });
-    }
-
-    return res.status(200).json({
-      message: "Ubicación asignada correctamente",
-      pedidoId: Number(id),
-      ubicacion: ubicacionLimpia,
-    });
-  } catch (error) {
-    console.error("Error al asignar ubicación:", error);
-
-    return res.status(500).json({
-      message: "Error interno al asignar ubicación",
     });
   }
 }

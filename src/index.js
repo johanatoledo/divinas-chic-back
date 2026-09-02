@@ -17,7 +17,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 // ==========================================
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://cafe-express.tonav-tech.online",
+  "https://divinaschic1.tonav-tech.online",
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 // ==========================================
@@ -59,7 +59,7 @@ app.use(express.json());
 // ==========================================
 app.get("/", (req, res) => {
   res.json({
-    message: "API cafe Express funcionando correctamente",
+    message: "API DivinasChic1 funcionando correctamente",
   });
 });
 
